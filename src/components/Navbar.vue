@@ -1,14 +1,25 @@
 <template>
   <nav>
     <div class="navbar-logo">
-      <img src="http://www.w3.org/2000/svg"/>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 261.76 226.69"><path d="M161.096.001l-30.225 52.351L100.647.001H-.005l130.877 226.688L261.749.001z" fill="#41b883"/><path d="M161.096.001l-30.225 52.351L100.647.001H52.346l78.526 136.01L209.398.001z" fill="#34495e"/></svg>
+      <img src="src/assets/logo.svg">
     </div>
 
     <ul>
-      <li><router-link to="/">Home</router-link></li>
-      <li><router-link to="/about">About Us</router-link></li>
-      <li><router-link to="/about">Settings</router-link></li>
+      <li>
+        <router-link to="/" title="Startseite">
+          <i class="fa fa-home"></i>
+        </router-link>
+      </li>
+      <li>
+        <router-link to="/about" title="Seite 1">
+          <i class="fa fa-file-text"></i>
+        </router-link>
+      </li>
+      <li>
+        <router-link to="/seite2" title="Seite 2">
+          <i class="fa fa-cogs"></i>
+        </router-link>
+      </li>
     </ul>
   </nav>
 </template>
@@ -22,7 +33,7 @@ export default {
 <style scoped>
 /* CSS-Stile für die Navigationsleiste */
 nav {
-  background-color: #333;
+  background-color: var(--dark-alt);
   color: #fff;
   padding: 10px;
   display: flex;
@@ -38,6 +49,7 @@ ul {
   list-style: none;
   padding: 0;
   display: flex;
+
 }
 
 li {
@@ -49,7 +61,14 @@ a {
   color: #fff;
 }
 
-.active {
-  font-weight: bold;
+
+.fa {
+  font-size: 2rem;
+  color: var(--light);
+  transition: 0.2s ease-out;
+}
+.fa:hover {
+  color: var(--primary);
+  transform: translateX(0.2rem);
 }
 </style>
