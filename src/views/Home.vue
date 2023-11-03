@@ -12,7 +12,7 @@
       </div>
     </div>
 
-    <!-- Hier können Sie Ihre Charts und andere Inhalte hinzufügen sadafd-->
+    <!-- Hier können Sie Ihred Charts und andere Inhalte hinzufügen sadafd-->
   </div>
 </template>
 
