@@ -36,6 +36,7 @@ export default {
 
 <style scoped>
 /* CSS-Stile für die Navigationsleiste */
+/* Test*/
 nav {
   background-color: var(--dark-alt);
   color: #fff;
@@ -78,3 +79,4 @@ a {
   transform: translateX(0.2rem);
 }
 </style>
+
