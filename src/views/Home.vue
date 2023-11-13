@@ -1,39 +1,48 @@
 <template>
-  <div class="home">
-    <h1>Startseite</h1>
-
-    <!-- Zeige die AboutUs-Komponente immer an -->
-    <div class="chart">
-      <div class="chart-container">
-        <About />
+  <html>
+    <body>
+    <div class="home">
+      <div class="chart">
+        <router-link to="/chart1" class="chart-container">
+          <Chart1 />
+        </router-link>
+        <router-link to="/chart1" class="chart-container">
+          <Chart1 />
+        </router-link>
+        <router-link to="/chart1" class="chart-container">
+          <Chart1 />
+        </router-link>
       </div>
-      <div class="chart-container">
-        <About />
-      </div>
+      <!-- Hier können Sie Ihre Charts und andere Inhalte hinzufügen -->
     </div>
-
-    <!-- Hier können Sie Ihred Charts und andere Inhalte hinzufügen sadafd-->
-  </div>
+    </body>
+  </html>
 </template>
 
 <script>
-import About from '../views/About.vue';
+import Chart1 from '../views/Chart1.vue';
 
 export default {
   components: {
-    About,
+    Chart1,
   },
 }
 </script>
 
-<style scoped>
+<style>
+
+body{
+  background-color: #4ade80;
+  margin: 0;
+}
+
 .chart {
   display: flex;
   justify-content: space-between;
 }
 
 .chart-container {
-  width: 50%; /* Jedes Diagramm nimmt 50% des Bildschirms ein */
+  width: 100%; /* Jedes Diagramm nimmt 50% des Bildschirms ein */
   border: 1px solid black; /* Schwarze Umrandung */
   padding: 10px; /* Innenabstand für das Diagramm */
   display: flex;

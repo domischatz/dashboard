@@ -1,4 +1,6 @@
-<template>
+<template xmlns="http://www.w3.org/1999/html">
+  <html>
+  <body>
   <nav>
     <div class="navbar-logo">
       <img src="src/assets/logo.svg">
@@ -11,7 +13,7 @@
         </router-link>
       </li>
       <li>
-        <router-link to="/about" title="Seite 1">
+        <router-link to="/Chart1" title="Seite 1">
           <i class="fa fa-file-text"></i>
         </router-link>
       </li>
@@ -22,6 +24,8 @@
       </li>
     </ul>
   </nav>
+  </body>
+  </html>
 </template>
 
 <script>
@@ -35,10 +39,12 @@ export default {
 nav {
   background-color: var(--dark-alt);
   color: #fff;
-  padding: 10px;
+  padding: 7px;
   display: flex;
   justify-content: space-between;
 }
+
+
 
 .navbar-logo {
   display: flex;
