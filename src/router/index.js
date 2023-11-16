@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
+import Home from '../components/Home.vue'
 
 const router = createRouter({
 	history: createWebHistory(),
@@ -10,7 +10,7 @@ const router = createRouter({
 		},
 		{
 			path: '/chart1', // Der Pfad für die About-Komponente
-			component: () => import('../views/Chart1.vue')
+			component: () => import('../components/Chart1.vue')
 		},
 		{
 			path: '/Map',

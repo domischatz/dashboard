@@ -3,8 +3,8 @@
     <body>
     <div class="home">
       <div class="chart">
-        <router-link to="components/Map.vue" class="chart-container">
-          <Map />
+        <router-link to="/Map" class="chart-container">
+          <Map/>
         </router-link>
         <router-link to="/chart1" class="chart-container">
           <Chart1 />
@@ -13,18 +13,17 @@
           <Chart1 />
         </router-link>
       </div>
-      <!-- Hier können Sie Ihre Charts und andere Inhalte hinzufügen -->
     </div>
     </body>
   </html>
 </template>
 
 <script>
-import Chart1 from '../views/Chart1.vue';
+import Chart1 from '../components/Chart1.vue';
 import Map from '../components/Map.vue';
 
 export default {
-  components: {
+  components: { // Registriert die Chart1-Komponente für die Verwendung in dieser Komponente.
     Chart1,
     Map,
   },
@@ -34,7 +33,6 @@ export default {
 <style>
 
 body{
-  background-color: #4ade80;
   margin: 0;
 }
 
