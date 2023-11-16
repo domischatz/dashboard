@@ -23,7 +23,7 @@ import Chart1 from '../components/Chart1.vue';
 import Map from '../components/Map.vue';
 
 export default {
-  components: { // Registriert die Chart1-Komponente für die Verwendung in dieser Komponente.
+  components: { // Registriert die Komponenten für die Verwendung in dieser Komponente.
     Chart1,
     Map,
   },
