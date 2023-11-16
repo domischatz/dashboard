@@ -12,6 +12,10 @@ const router = createRouter({
 			path: '/chart1', // Der Pfad für die About-Komponente
 			component: () => import('../views/Chart1.vue')
 		},
+		{
+			path: '/Map',
+			component: () => import('../components/Map.vue')
+		},
 	],
 })
 

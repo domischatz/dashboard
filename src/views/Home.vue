@@ -3,8 +3,8 @@
     <body>
     <div class="home">
       <div class="chart">
-        <router-link to="/chart1" class="chart-container">
-          <Chart1 />
+        <router-link to="components/Map.vue" class="chart-container">
+          <Map />
         </router-link>
         <router-link to="/chart1" class="chart-container">
           <Chart1 />
@@ -21,10 +21,12 @@
 
 <script>
 import Chart1 from '../views/Chart1.vue';
+import Map from '../components/Map.vue';
 
 export default {
   components: {
     Chart1,
+    Map,
   },
 }
 </script>
