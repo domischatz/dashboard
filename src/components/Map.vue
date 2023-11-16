@@ -18,8 +18,6 @@ export default {
     };
   },
 
-
-
   methods: {
     initMap() {
       this.map = new window.google.maps.Map(this.$refs.map, {
