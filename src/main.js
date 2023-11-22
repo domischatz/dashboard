@@ -6,5 +6,5 @@ import CanvasJSChart from '@canvasjs/vue-charts';
 
 createApp(App)
     .use(router)
-    .use(CanvasJSChart) // Installieren Sie das CanvasJS Vuejs Chart Plugin
+    .use(CanvasJSChart) //CanvasJS Vuejs Chart Plugin
     .mount('#app');

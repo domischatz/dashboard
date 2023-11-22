@@ -3,9 +3,9 @@
     <body>
     <div class="home">
       <div class="chart">
-        <router-link to="/Map" class="chart-container">
-          <Map/>
-        </router-link>
+          <div class="map-container">
+            <Map/>
+          </div>
         <router-link to="/chart1" class="chart-container">
           <Chart1 />
         </router-link>
@@ -46,5 +46,8 @@ body{
   border: 1px solid black; /* Schwarze Umrandung */
   padding: 2px; /* Innenabstand für das Diagramm */
   display: flex;
+}
+.map-container {
+  width: 100%;
 }
 </style>
