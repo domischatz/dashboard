@@ -172,8 +172,8 @@ export default {
         }]
       },
       styleOptions: {
-        width: "50%",
-        height: "360px",
+        width: "100%",
+        height: "400px",
         float: "left"
       }
     }

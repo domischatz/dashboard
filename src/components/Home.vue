@@ -43,7 +43,7 @@ body{
 
 .chart-container {
   width: 100%;
-  border: 1px solid black; /* Schwarze Umrandung */
+  //border: 1px solid black; /* Schwarze Umrandung */
   padding: 2px; /* Innenabstand für das Diagramm */
   display: flex;
 }
