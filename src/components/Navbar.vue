@@ -38,7 +38,7 @@ export default {
 /* CSS-Stile für die Navigationsleiste */
 /* Test*/
 nav {
-  background-color: var(--dark-alt);
+  background-color: var(--primary);
   color: #fff;
   padding: 7px;
   display: flex;
@@ -71,11 +71,11 @@ a {
 
 .fa {
   font-size: 2rem;
-  color: var(--light);
+  color: #ffffff;
   transition: 0.2s ease-out;
 }
 .fa:hover {
-  color: var(--primary);
+  color: var(--secondary);
   transform: translateX(0.2rem);
 }
 </style>

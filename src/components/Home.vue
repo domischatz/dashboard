@@ -1,38 +1,42 @@
 <template>
   <html>
-    <body>
-    <div class="home">
-      <div class="chart">
-          <div class="map-container">
-            <Map/>
-          </div>
-        <router-link to="/chart1" class="chart-container">
-          <Chart1 />
-        </router-link>
-        <router-link to="/chart1" class="chart-container">
-          <Chart1 />
-        </router-link>
+  <body>
+  <div class="home">
+    <div class="chart">
+      <!--
+      <div class="map-container">
+        <Map/>
       </div>
+      -->
+      <router-link to="/chart1" class="chart-container">
+        <Chart1 />
+      </router-link>
+      <router-link to="/chart1" class="chart-container">
+        <Chart1 />
+      </router-link>
     </div>
-    </body>
+    <ErrorList/>
+  </div>
+  </body>
   </html>
 </template>
 
 <script>
 import Chart1 from '../components/Chart1.vue';
-import Map from '../components/Map.vue';
+import ErrorList from "./ErrorList.vue";
+//import Map from '../components/Map.vue';
 
 export default {
-  components: { // Registriert die Komponenten für die Verwendung in dieser Komponente.
+  components: {
     Chart1,
-    Map,
+    ErrorList
+    //Map,
   },
 }
 </script>
 
 <style>
-
-body{
+body {
   margin: 0;
 }
 
@@ -43,10 +47,11 @@ body{
 
 .chart-container {
   width: 100%;
-  //border: 1px solid black; /* Schwarze Umrandung */
+//border: 1px solid black; /* Schwarze Umrandung */
   padding: 2px; /* Innenabstand für das Diagramm */
   display: flex;
 }
+
 .map-container {
   width: 100%;
 }

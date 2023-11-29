@@ -9,12 +9,16 @@ const router = createRouter({
 			component: Home
 		},
 		{
-			path: '/chart1', // Der Pfad für die About-Komponente
+			path: '/Chart1', // Der Pfad für die About-Komponente
 			component: () => import('../components/Chart1.vue')
 		},
 		{
 			path: '/Map',
 			component: () => import('../components/Map.vue')
+		},
+		{
+			path: '/ErrorList',
+			component: () => import('../components/ErrorList.vue')
 		},
 	],
 })
