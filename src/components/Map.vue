@@ -22,7 +22,30 @@ export default {
     initMap() {
       this.map = new window.google.maps.Map(this.$refs.map, {
         center: { lat: 47.0808, lng: 10.3256 }, // Setze die Startposition der Karte aufs Paznauntal
-        zoom: 8,
+        zoom: 10,
+        styles: [
+          {
+            featureType: 'all',
+            elementType: 'labels',
+            stylers: [
+              { visibility: 'off' } // Setze die Sichtbarkeit aller Beschriftungen auf "aus"
+            ]
+          },
+          {
+            featureType: 'road',
+            elementType: 'labels',
+            stylers: [
+              { visibility: 'on' } // Setze die Sichtbarkeit von Straßenbeschriftungen auf "an"
+            ]
+          },
+          {
+            featureType: 'administrative.locality', // Gemeinden
+            elementType: 'labels',
+            stylers: [
+              { visibility: 'on' } // Setze die Sichtbarkeit von Gemeinden auf "an"
+            ]
+          },
+        ]
       });
 
       // Initialisiere den Geocoder
