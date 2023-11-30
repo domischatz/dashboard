@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h2>Fehlerliste</h2>
     <table ref="dataTable" class="display">
       <thead>
       <tr>
@@ -44,20 +43,22 @@ export default {
 </script>
 
 <style>
-/* Stilregeln für die Tabelle können hier hinzugefügt werden */
-table {
-  border-collapse: collapse;
-  width: 100%;
+*,*:after,*:before{
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-th,
-td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
+input,select{
+  background-color: var(--light);;
 }
 
-th {
-  background-color: #f2f2f2;
+table thead tr td,
+table thead tr th,
+table tfoot tr td,
+table tfoot tr th{
+  background-color: var(--primary);
+  color: #fff;
 }
 </style>
