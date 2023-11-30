@@ -1,27 +1,63 @@
-<script setup>
-import { ref, onMounted } from "vue";
-import { VueTable } from "@harv46/vue-table";
-import "@harv46/vue-table/dist/style.css";
-
-const headers = ["HostID", "Hostname", "Description", "Priority", "Unack"];
-const keys = ["HostID", "Hostname", "Description", "Priority", "Unack"];
-
-const data = ref([]);
-
-onMounted(async () => {
-  try {
-    const response = await fetch("src/components/fehlerliste.json");
-    const jsonData = await response.json();
-    data.value = jsonData;
-  } catch (error) {
-    console.error("Fehler beim Laden der Daten:", error);
-  }
-});
-</script>
-
 <template>
   <div>
-    <VueTable :headers="headers" :data="data" :keys="keys"/>
+    <h2>Fehlerliste</h2>
+    <table ref="dataTable" class="display">
+      <thead>
+      <tr>
+        <th>Hostname</th>
+        <th>Description</th>
+        <th>Priority</th>
+        <th>Unack</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr v-for="(error, index) in fehlerliste" :key="index">
+        <td>{{ error.Hostname }}</td>
+        <td>{{ error.Description }}</td>
+        <td>{{ error.Priority }}</td>
+        <td>{{ error.Unack }}</td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
+<script>
+import "datatables.net";
+import "datatables.net-dt/css/jquery.dataTables.css";
+
+export default {
+  data() {
+    return {
+      fehlerliste: []
+    };
+  },
+  mounted() {
+    import("../components/fehlerliste.json").then((data) => {
+      this.fehlerliste = data.default;
+
+      // Hier wird DataTables initialisiert
+      $(this.$refs.dataTable).DataTable();
+    });
+  },
+  };
+</script>
+
+<style>
+/* Stilregeln für die Tabelle können hier hinzugefügt werden */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+</style>

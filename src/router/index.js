@@ -1,5 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../components/Home.vue'
+import $ from 'jquery';
+window.jQuery = $;
+window.$ = $;
+
 
 const router = createRouter({
 	history: createWebHistory(),
@@ -19,6 +23,7 @@ const router = createRouter({
 		{
 			path: '/ErrorList',
 			component: () => import('../components/ErrorList.vue')
+
 		},
 	],
 })
