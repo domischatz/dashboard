@@ -10,7 +10,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="(error, index) in fehlerliste" :key="index">
+      <tr v-for="(error, index) in fehlerliste" :key="index" @click="goToDetailsPage(error)">
         <td>{{ error.Hostname }}</td>
         <td>{{ error.Description }}</td>
         <td>{{ error.Priority }}</td>
@@ -31,15 +31,18 @@ export default {
       fehlerliste: []
     };
   },
-  mounted() {
-    import("../components/fehlerliste.json").then((data) => {
-      this.fehlerliste = data.default;
-
-      // Hier wird DataTables initialisiert
-      $(this.$refs.dataTable).DataTable();
-    });
+  methods: {
+    goToDetailsPage(rowData) {
+      this.$router.push({ name: "UserData", query: { userData: JSON.stringify(rowData) } });
+    }
   },
-  };
+  mounted() {
+    import("../components/fehlerliste.json").then(data => {
+      this.fehlerliste = data.default;
+      const dataTable = $(this.$refs.dataTable).DataTable();
+    });
+  }
+};
 </script>
 
 <style>
@@ -51,7 +54,7 @@ export default {
 }
 
 input,select{
-  background-color: var(--light);;
+  background-color: var(--light);
 }
 
 table thead tr td,
