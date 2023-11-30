@@ -1,12 +1,5 @@
 [
-  {"HostID": "10593", "Hostname": "Host Kappl", "Description": "ICMP: Unavailable by ICMP ping", "Priority": "4", "Unack": true},
-  {"HostID": "10724", "Hostname": "Pfarramt Galtuer - Bernhard Speringer", "Description": "ICMP: Unavailable by ICMP ping", "Priority": "4", "Unack": true},
-  {"HostID": "10736", "Hostname": "Schischule Galtuer - Platz", "Description": "ICMP: Unavailable by ICMP ping", "Priority": "4", "Unack": true},
-  {"HostID": "10737", "Hostname": "Schischule Galtuer - Wirl", "Description": "ICMP: Unavailable by ICMP ping", "Priority": "4", "Unack": true},
-  {"HostID": "10709", "Hostname": "Markus Zangerl", "Description": "ICMP: Unavailable by ICMP ping", "Priority": "4", "Unack": true},
-  {"HostID": "10943", "Hostname": "Chalet Nadja - Zangerl Gabi Valzur", "Description": "ICMP: Unavailable by ICMP ping", "Priority": "4", "Unack": true},
-  {"HostID": "11068", "Hostname": "Test3", "Description": "ICMP: Unavailable by ICMP ping", "Priority": "4", "Unack": true},
-  {"HostID": "11069", "Hostname": "Hotel Das Adler Balma - Philippi Lech", "Description": "ICMP: Unavailable by ICMP ping", "Priority": "4", "Unack": true},
-  {"HostID": "10916", "Hostname": "Zangerl Marco", "Description": "ICMP: Unavailable by ICMP ping", "Priority": "4", "Unack": true},
-  {"HostID": "10816", "Hostname": "Jehle Paul", "Description": "ICMP: Unavailable by ICMP ping", "Priority": "4", "Unack": true}
+  {"HostID": "10593", "Hostname": "Host Kappl", "Description": "ICMP: Unavailable by ICMP ping", "Priority": "4", "Unack": true, "Address": "Grubegg 627, Kappl, AT"},
+  {"HostID": "10724", "Hostname": "Pfarramt Galtuer - Bernhard Speringer", "Description": "ICMP: Unavailable by ICMP ping", "Priority": "4", "Unack": true, "Address": "Valzurweg 3, Mathon, AT"},
+  {"HostID": "10736", "Hostname": "Schischule Galtuer - Platz", "Description": "ICMP: Unavailable by ICMP ping", "Priority": "4", "Unack": true, "Address": "Grubegg 342, Kappl, AT"}
 ]
