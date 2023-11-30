@@ -3,11 +3,9 @@
   <body>
   <div class="home">
     <div class="chart">
-      <!--
       <div class="map-container">
         <Map/>
       </div>
-      -->
       <router-link to="/chart1" class="chart-container">
         <Chart1 />
       </router-link>
@@ -24,13 +22,13 @@
 <script>
 import Chart1 from '../components/Chart1.vue';
 import ErrorList from "./ErrorList.vue";
-//import Map from '../components/Map.vue';
+import Map from '../components/Map.vue';
 
 export default {
   components: {
     Chart1,
-    ErrorList
-    //Map,
+    ErrorList,
+    Map,
   },
 }
 </script>
