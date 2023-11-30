@@ -10,11 +10,9 @@ export default {
     return {
       map: null,
       geocoder: null,
-      addresses: [
-        { address: "Grubegg 627, Kappl, AT", name: "Anschluss_Name1" },
-        { address: "Grubegg 342, Kappl, AT", name: "Anschluss_Name2" },
-        { address: "Valzurweg 3, Mathon, AT", name: "Ritsch tschodaa"},
-      ],
+      users: [],
+      heatmapData: [],
+      heatmapLayer: [],
     };
   },
 
@@ -50,14 +48,23 @@ export default {
 
       // Initialisiere den Geocoder
       this.geocoder = new window.google.maps.Geocoder();
+
+      // Fügt ein leeres Heatmap-Layer zur Karte hinzu
+      this.heatmapLayer = new window.google.maps.visualization.HeatmapLayer({
+        data: this.heatmapData,
+        map: this.map,
+      });
     },
 
-    geocodeAddresses() {
-      // Geht durch jede Adresse im Array und wandelt diese in Längen- & Breitengrade um
-      this.addresses.forEach((location) => {
-        const { address, name } = location;
+    async geocodeAddresses(format, data) {
 
-        this.geocoder.geocode({ address: address }, (results, status) => {
+      await this.loadUserData();
+
+      // Geht durch jede Adresse im Array und wandelt diese in Längen- & Breitengrade um
+      this.users.forEach((location) => {
+        const { Address, Hostname } = location;
+
+        this.geocoder.geocode({ address: Address }, (results, status) => {
           if (status === "OK") {
             console.log(results[0].geometry.location);
 
@@ -65,12 +72,12 @@ export default {
             const marker = new window.google.maps.Marker({
               map: this.map,
               position: results[0].geometry.location,
-              title: name,
+              title: Hostname,
             });
 
             // Erstellt Infofenster
             const infoWindow = new window.google.maps.InfoWindow({
-              content: name,
+              content: Hostname,
             });
 
             // Fügt Event-Listener hinzu, um Infofenster zu öffnen, wenn Marker geklickt
@@ -78,19 +85,45 @@ export default {
               infoWindow.open(this.map, marker);
             });
           } else {
-            console.error("Geocoding fehlgeschlagen für Adresse '" + address + "': " + status);
+            console.error("Geocoding fehlgeschlagen für Adresse '" + Address + "': " + status);
           }
+        });
+      });
+
+      this.heatmapLayer.setData(this.heatmapData, data);
+    },
+
+    // Asynchrone Methode zum auslesen und speichern der benötigten daten aus dem Json-File von Felix,
+    //    muss asynchron sein, damit die geocodeAddresses Methode erst nach dem auslesen ausgeführt wird
+    //        sonst ist das Array mit den gespeicherten Userdaten zum Zeitpunkt des Geocoden leer
+    async loadUserData() {
+      return new Promise((resolve) => {
+        import("../components/fehlerliste.json").then((data) => {
+          this.users = data.default.map(item => ({
+            Hostname: item.Hostname.replace(/"/g, ''),
+            Address: item.Address.replace(/"/g, '')
+          }));
+
+          this.heatmapData = data.default.map(item => ({
+            Description: item.Description.replace(/"/g, ''),
+            Priority: item.Priority.replace(/"/g, '')
+          }));
+
+          console.log(this.users);
+
+          console.log(this.heatmapData)
+
+          resolve();
         });
       });
     },
   },
 
-
-
   mounted() {
     this.initMap();
     // Ruft die Methode mit Testadressen auf
     this.geocodeAddresses();
+
   },
 };
 </script>
