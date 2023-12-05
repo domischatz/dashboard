@@ -11,10 +11,10 @@
       </thead>
       <tbody>
       <tr v-for="(error, index) in fehlerliste" :key="index" @click="goToDetailsPage(error)">
-        <td>{{ error.Hostname }}</td>
-        <td>{{ error.Description }}</td>
-        <td>{{ error.Priority }}</td>
-        <td>{{ error.Unack }}</td>
+        <td>{{ error.hostname }}</td>
+        <td>{{ error.description }}</td>
+        <td>{{ error.priority }}</td>
+        <td>{{ error.unack }}</td>
       </tr>
       </tbody>
     </table>

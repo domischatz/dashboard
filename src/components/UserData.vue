@@ -2,11 +2,11 @@
   <div>
     <h2>User Data</h2>
     <div>
-      <p><strong>HostID:</strong> {{ userData.HostID }}</p>
-      <p><strong>Hostname:</strong> {{ userData.Hostname }}</p>
-      <p><strong>Description:</strong> {{ userData.Description }}</p>
-      <p><strong>Priority:</strong> {{ userData.Priority }}</p>
-      <p><strong>Unack:</strong> {{ userData.Unack }}</p>
+      <p><strong>HostID:</strong> {{ userData.hostid }}</p>
+      <p><strong>Hostname:</strong> {{ userData.hostname }}</p>
+      <p><strong>Description:</strong> {{ userData.description }}</p>
+      <p><strong>Priority:</strong> {{ userData.priority }}</p>
+      <p><strong>Unack:</strong> {{ userData.unack }}</p>
     </div>
   </div>
 </template>
