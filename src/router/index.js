@@ -25,10 +25,10 @@ const routes = [
 		component: () => import('../components/ErrorList.vue')
 	},
 	{
-		path: '/UserData',
-		name: 'UserData',
-		component: () => import('../components/UserData.vue'),
-		props: route => ({ userData: JSON.parse(route.query.userData) })
+		path: '/DatenHost',
+		name: 'DatenHost',
+		component: () => import('../components/DatenHost.vue'),
+		props: route => ({ datenHost: JSON.parse(route.query.datenHost) })
 	}
 ];
 

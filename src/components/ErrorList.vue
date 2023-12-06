@@ -28,20 +28,31 @@ import "datatables.net-dt/css/jquery.dataTables.css";
 export default {
   data() {
     return {
-      fehlerliste: []
+      fehlerliste: [],
+      datenHost: [],
     };
   },
   methods: {
     goToDetailsPage(rowData) {
-      this.$router.push({ name: "UserData", query: { userData: JSON.stringify(rowData) } });
-    }
+      // Find the corresponding entry in datenHost.json based on hostid
+      const selectedData = this.datenHost.find(item => item.hostid === rowData.hostid);
+
+      // Use this.$router.push to navigate to another page with the selectedData
+      this.$router.push({ name: "DatenHost", query: {datenHost: JSON.stringify(selectedData) } });
+    },
   },
   mounted() {
-    import("../components/fehlerliste.json").then(data => {
+    // Load fehlerliste.json
+      import("../components/fehlerliste.json").then(data => {
       this.fehlerliste = data.default;
       const dataTable = $(this.$refs.dataTable).DataTable();
     });
-  }
+
+    // Load datenhost.json
+    import("../components/datenhost.json").then(data => {
+      this.datenHost = data.default;
+    });
+  },
 };
 </script>
 
