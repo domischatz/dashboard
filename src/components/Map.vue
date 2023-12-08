@@ -5,48 +5,48 @@
 </template>
 
 <script>
-import ApiService from './ApiHeatmapDatenbank';
-import userDaten from './fehlerliste.json';
+import userDaten from './testusers.json';
+import axios from 'axios';
 
 export default {
   data() {
     return {
       map: null,
       geocoder: null,
+      testusers: [],
       users: [],
-      geocodedAddresses: [],
-      geocodedUsers: [],
-      heatmapData: [],
     };
   },
 
   methods: {
-    /*async insertUserData() {
-      console.log(this.users)
-      try {
-        for (const user of this.users) {
-          await ApiService.insertDaten(user);
-        }
-        console.log('Benutzerdaten erfolgreich in die Datenbank eingefügt');
-      } catch (error) {
-        console.error('Fehler beim Einfügen von Benutzerdaten in die Datenbank:', error);
-      }
-    },*/
+    addUser() {
+      // Füge den aktuellen Benutzer dem Benutzerarray hinzu
+      this.users = [...this.testusers];
+      // Setze das Formular zurück
+      this.testusers = [];
+    },
 
-    // Aufruf der insertDaten-Methode für jeden Benutzer im Array
     async insertDaten() {
+      // API-Aufruf zum Einfügen von Daten
       try {
-        const results = await Promise.all(this.users.map(user => ApiService.insertDaten(user)));
-        console.log('Einfügen erfolgreich für alle Benutzer:', results);
+        await axios.post('http://localhost:3000/api/insert', this.users);
+
+        console.log('Daten erfolgreich eingefügt');
       } catch (error) {
         console.error('Fehler beim Einfügen von Daten:', error);
       }
+
+      // Leere das Benutzerarray
+      this.users = [];
     }
   },
 
   mounted() {
+    //console.log("Daten der User: ", userDaten);
     this.users = userDaten;
-    console.log(this.users);
+    console.log("Daten in testusers: ", this.users)
+    //this.addUser();
+    console.log("Daten in users: ", this.users);
     this.insertDaten();
   },
 };
