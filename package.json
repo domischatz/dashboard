@@ -10,14 +10,18 @@
   "dependencies": {
     "@canvasjs/vue-charts": "^1.0.1",
     "@harv46/vue-table": "^0.1.1",
+    "apexcharts": "^3.44.2",
     "axios": "^1.6.2",
     "bootstrap-vue": "^2.23.1",
     "canvasjs": "^1.8.3",
-    "chart.js": "^4.4.0",
+    "chart.js": "^4.4.1",
     "datatables.net": "^1.13.8",
     "datatables.net-dt": "^1.13.8",
     "font-awesome": "^4.7.0",
+    "moment": "^2.29.4",
     "vue": "^3.3.4",
+    "vue-apexcharts": "^1.6.2",
+    "vue-chartjs": "^5.2.0",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {

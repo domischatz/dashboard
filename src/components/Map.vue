@@ -98,7 +98,7 @@ export default {
     //        sonst ist das Array mit den gespeicherten Userdaten zum Zeitpunkt des Geocoden leer
     async loadUserData() {
       return new Promise((resolve) => {
-        import("../components/fehlerliste.json").then((data) => {
+        import("../data/fehlerliste.json").then((data) => {
           this.users = data.default.map(item => ({
             Hostname: item.Hostname.replace(/"/g, ''),
             Address: item.Address.replace(/"/g, '')

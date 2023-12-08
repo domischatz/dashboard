@@ -17,13 +17,22 @@
         <td>{{ error.unack }}</td>
       </tr>
       </tbody>
+      <tfoot>
+      <tr>
+        <th>Hostname</th>
+        <th>Description</th>
+        <th>Priority</th>
+        <th>Unack</th>
+      </tr>
+      </tfoot>
     </table>
   </div>
 </template>
 
 <script>
 import "datatables.net";
-import "datatables.net-dt/css/jquery.dataTables.css";
+import "datatables.net-dt";
+import "datatables.net-dt/css/jquery.dataTables.min.css";
 
 export default {
   data() {
@@ -43,13 +52,13 @@ export default {
   },
   mounted() {
     // Load fehlerliste.json
-      import("../components/fehlerliste.json").then(data => {
+    import("../data/fehlerliste.json").then(data => {
       this.fehlerliste = data.default;
       const dataTable = $(this.$refs.dataTable).DataTable();
     });
 
     // Load datenhost.json
-    import("../components/datenhost.json").then(data => {
+    import("../data/datenHost.json").then(data => {
       this.datenHost = data.default;
     });
   },
@@ -57,21 +66,14 @@ export default {
 </script>
 
 <style>
-*,*:after,*:before{
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -ms-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-input,select{
+input, select {
   background-color: var(--light);
 }
 
 table thead tr td,
 table thead tr th,
 table tfoot tr td,
-table tfoot tr th{
+table tfoot tr th {
   background-color: var(--primary);
   color: #fff;
 }

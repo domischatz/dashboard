@@ -18,7 +18,7 @@
         </router-link>
       </li>
       <li>
-        <router-link to="/seite2" title="Seite 2">
+        <router-link to="/Chart1" title="Seite 1">
           <i class="fa fa-cogs"></i>
         </router-link>
       </li>
