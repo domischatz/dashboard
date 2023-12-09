@@ -1,3 +1,4 @@
+// API-Service wurde geschrieben
 /*
 import axios from 'axios';
 
@@ -32,7 +33,8 @@ export default new ApiService();*/
 
 
 
-const express = require('express');
+// Nach längerem googlen wurde erkannt dass ein Server benötigt wird und man dafür express verwenden kann
+/*const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql');
 
@@ -52,14 +54,14 @@ const dbConfig = {
 // Verbindung zur Datenbank
 const connection = mysql.createConnection(dbConfig);
 
-/*connection.connect((err) => {
+/!*connection.connect((err) => {
     if (err) {
         console.error('Fehler beim Verbinden zur Datenbank:', err);
         throw err;
     }
 
     console.log('Erfolgreich zur Datenbank verbunden');
-});*/
+});*!/
 
 
 // Middleware, um JSON-Anfragen zu verarbeiten
@@ -97,11 +99,11 @@ app.post('/api/insert', (req, res) => {
         }
     );
 
-    /*connection.end((endError) => {
+    /!*connection.end((endError) => {
         if (endError) {
             console.error('Fehler beim Schließen der Verbindung:', endError);
         }
-    });*/
+    });*!/
 });
 
 // Abrufen von Daten
@@ -111,6 +113,89 @@ app.get('/api/get', (req, res) => {
         if (error) {
             console.error('Fehler beim Abrufen von Daten:', error);
             return res.status(500).send('Internal Server Error');
+        }
+
+        res.json(results);
+    });
+});
+
+app.listen(port, () => {
+    console.log(`Server läuft auf http://localhost:${port}`);
+});*/
+
+
+
+// Server gab immer folgenden fehler aus:
+// Fehler beim Einfügen von Daten: Error:
+//   ER_NOT_SUPPORTED_AUTH_MODE: Client does not support authentication protocol requested by server; consider upgrading MySQL client
+
+// Durch googlen wurde herausgefunden dass mysql cors nicht richtig unterstützt (teilweise), es kann umgangen werden durch das verwenden von mysql2
+const express = require('express');
+const cors = require('cors');
+const mysql = require('mysql2');
+
+const app = express();
+const port = 3000;
+
+app.use(cors());
+
+const dbConfig = {
+    host: 'localhost',
+    user: 'root',
+    password: 'Mawe6184!',
+    database: 'userdatenbankdiplomarbeit'
+};
+
+const pool = mysql.createPool(dbConfig);
+
+// Middleware, um JSON-Anfragen zu verarbeiten
+app.use(express.json());
+
+app.post('/api/insert', (req, res) => {
+    const users = req.body;
+
+    if (!Array.isArray(users) || users.length === 0) {
+        return res.status(400).send('Ungültiges Datenformat. Erwarte ein Array von Benutzern.');
+    }
+
+    const userValues = users.map(user => [
+        user.HostID,
+        user.Hostname,
+        user.Error,
+        user.Priority,
+        user.Address,
+        user.Lng,
+        user.Lat
+    ]);
+
+    pool.getConnection((error, connection) => {
+        if (error) {
+            console.error('Fehler beim Verbinden zur Datenbank:', error);
+            return res.status(500).send('Interner Serverfehler');
+        }
+
+        connection.query(
+            'INSERT INTO users (HostID, Hostname, Error, Priority, Address, Lng, Lat) VALUES ?',
+            [userValues],
+            (error, results) => {
+                //freigeben der Verbindung
+                connection.release();
+                if (error) {
+                    console.error('Fehler beim Einfügen von Daten:', error);
+                    return res.status(500).send('Interner Serverfehler');
+                }
+
+                res.status(201).send('Daten erfolgreich eingefügt');
+            }
+        );
+    });
+});
+
+app.get('/api/get', (req, res) => {
+    pool.query('SELECT * FROM users', (error, results) => {
+        if (error) {
+            console.error('Fehler beim Abrufen von Daten:', error);
+            return res.status(500).send('Interner Serverfehler');
         }
 
         res.json(results);
