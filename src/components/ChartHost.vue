@@ -43,7 +43,7 @@ export default {
         }
       },
   mounted() {
-    import("../data/History/10621.json").then(data => {
+    import("../data/10621.json").then(data => {
       this.jsonData = data.default;
 
     });
