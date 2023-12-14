@@ -1,4 +1,4 @@
-<!--<template>
+<template>
   <div>
     <h2>User Data</h2>
     <div>
@@ -7,10 +7,17 @@
       </p>
     </div>
   </div>
+  <ChartHost/>
 </template>
 
 <script>
+import ChartHost from "./ChartHost.vue";
+
 export default {
+  components: {
+    ChartHost
+  },
+
   props: {
     datenHost: {
       type: Object,
@@ -18,53 +25,8 @@ export default {
     }
   }
 };
-</script>-->
-<template>
-  <div>
-    <Line :data="chartData"></Line>
-  </div>
-</template>
-
-<script>
-import { Line } from 'vue-chartjs';
-import {  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend} from 'chart.js';
-
-ChartJS.register(Title,Tooltip, CategoryScale, LinearScale, Legend, LineElement ,LineElement,PointElement);
-
-export default {
-  name: 'Chart',
-  components: { Line },
-  mounted() {
-    import("../data/History/10621.json").then(data => {
-      const jsonData = data.default;
-      this.chartData.labels = jsonData.map(entry => entry.clock);
-      this.chartData.datasets= jsonData.map(entry => parseFloat(entry.value));
-      console.log(this.chartData.labels);
-      console.log(this.chartData.datasets)
-    });
-  },
-  data() {
-    return {
-      chartData: {
-        labels: [],
-        datasets: [
-          {
-            label: 'Values',
-            data: [],
-          },
-        ],
-      },
-    };
-  },
-};
 </script>
+
 
 
 

@@ -7,10 +7,10 @@
 <!--        <Map/>-->
       </div>
       <router-link to="/chart1" class="chart-container">
-        <Chart1 />
+<!--        <Chart1 />-->
       </router-link>
       <router-link to="/chart1" class="chart-container">
-        <Chart1 />
+<!--        <Chart1 />-->
       </router-link>
     </div>
     <ErrorList/>

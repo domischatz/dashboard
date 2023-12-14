@@ -52,7 +52,7 @@ export default {
   },
   mounted() {
     // Load fehlerliste.json
-    import("../data/fehlerliste.json").then(data => {
+      import("../data/fehlerliste.json").then(data => {
       this.fehlerliste = data.default;
       const dataTable = $(this.$refs.dataTable).DataTable();
     });
@@ -61,6 +61,7 @@ export default {
     import("../data/datenHost.json").then(data => {
       this.datenHost = data.default;
     });
+
   },
 };
 </script>
