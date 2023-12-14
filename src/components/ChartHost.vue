@@ -35,8 +35,14 @@ export default {
             datasets: [
               {
                 label: "Values",
-                backgroundColor: '#f87979',
+/*                backgroundColor: '#f87979',*/
                 data: this.jsonData.map(entry => parseFloat(entry.value)),
+                backgroundColor: "#2b4c99",
+                fill: false,
+                borderColor: "rgb(43, 76, 153)",
+                tension: 0.1,
+                pointRadius: 0.5,
+                borderWidth: 2,
               },
             ],
           }
