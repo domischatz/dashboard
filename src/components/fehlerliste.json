@@ -1,5 +1,0 @@
-[
-  {"HostID": "10593", "Hostname": "Host Kappl", "Description": "ICMP: Unavailable by ICMP ping", "Priority": "4", "Unack": true, "Address": "Grubegg 627, Kappl, AT"},
-  {"HostID": "10724", "Hostname": "Pfarramt Galtuer - Bernhard Speringer", "Description": "ICMP: Unavailable by ICMP ping", "Priority": "4", "Unack": true, "Address": "Valzurweg 3, Mathon, AT"},
-  {"HostID": "10736", "Hostname": "Schischule Galtuer - Platz", "Description": "ICMP: Unavailable by ICMP ping", "Priority": "4", "Unack": true, "Address": "Grubegg 342, Kappl, AT"}
-]
