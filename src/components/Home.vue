@@ -22,13 +22,13 @@
 <script>
 import Chart1 from '../components/Chart1.vue';
 import ErrorList from "./ErrorList.vue";
-/*import Map from '../components/Map.vue';*/
+import Map from '../components/Map.vue';
 
 export default {
   components: {
     Chart1,
     ErrorList,
-/*    Map,*/
+    Map,
   },
 }
 </script>

@@ -15,6 +15,7 @@ export default {
       geocoder: null,
       testusers: [],
       users: [],
+      uncodierteUser: [],
     };
   },
 
@@ -59,6 +60,21 @@ export default {
         console.error('Fehler beim Auslesen der Daten:', error);
       }
     },
+
+    async getDataWithoutGeocoding() {
+      //API-Aufruf zum Auslesen der Daten
+      try {
+        const antwort = await axios.get('http://localhost:3000/api/get');
+
+        // this.uncodierteUser = antwort.data;
+        this.uncodierteUser = antwort.data.filter(user => user.Lng === 0 || user.Lat === 0);
+
+        console.log("Daten erfolgreich ausgelesen: ", this.uncodierteUser);
+
+      } catch (error) {
+        console.error('Fehler beim Auslesen der Daten:', error);
+      }
+    },
   },
 
   mounted() {
@@ -69,7 +85,9 @@ export default {
     // Füge Daten in Db ein
     // this.insertData();
 
-    this.getData()
+    //this.getData()
+
+    this.getDataWithoutGeocoding()
   },
 };
 </script>
