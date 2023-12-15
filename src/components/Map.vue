@@ -69,7 +69,7 @@ export default {
     // Füge Daten in Db ein
     // this.insertData();
 
-    //this.getData()
+    this.getData()
   },
 };
 </script>
