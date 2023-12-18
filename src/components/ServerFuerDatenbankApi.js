@@ -202,6 +202,42 @@ app.get('/api/get', (req, res) => {
     });
 });
 
+
+app.put('/api/update/:userId', (req, res) => {
+    const userId = req.params.userId;
+    const { Lng, Lat } = req.body;
+
+    if (!Lng || !Lat) {
+        return res.status(400).send('Lng und Lat müssen angegeben werden.');
+    }
+
+    pool.getConnection((error, connection) => {
+        if (error) {
+            console.error('Fehler beim Verbinden zur Datenbank:', error);
+            return res.status(500).send('Interner Serverfehler');
+        }
+
+        connection.query(
+            'UPDATE users SET Lng = ?, Lat = ? WHERE UserID = ?',
+            [Lng, Lat, userId],
+            (error, results) => {
+                // Freigeben der Verbindung
+                connection.release();
+                if (error) {
+                    console.error('Fehler beim Aktualisieren von Daten:', error);
+                    return res.status(500).send('Interner Serverfehler');
+                }
+
+                if (results.affectedRows === 0) {
+                    return res.status(404).send('Benutzer nicht gefunden');
+                }
+
+                res.status(200).send('Daten erfolgreich aktualisiert');
+            }
+        );
+    });
+});
+
 app.listen(port, () => {
     console.log(`Server läuft auf http://localhost:${port}`);
 });

@@ -4,7 +4,7 @@
   <div class="home">
     <div class="chart">
       <div class="map-container">
-<!--        <Map/>-->
+        <Map/>
       </div>
       <router-link to="/chart1" class="chart-container">
 <!--        <Chart1 />-->

@@ -7,6 +7,7 @@
 <script>
 import userDaten from './testusers.json';
 import axios from 'axios';
+import {mapMethods} from './ausgelagerte Methoden/mapMethods';
 
 export default {
   data() {
@@ -14,7 +15,7 @@ export default {
       map: null,
       geocoder: null,
       testusers: [],
-      users: [],
+      newUsers: [],
       uncodierteUser: [],
     };
   },
@@ -25,7 +26,7 @@ export default {
       this.testusers = userDaten;
 
       // Füge den aktuellen Benutzer dem Benutzerarray hinzu
-      this.users = [...this.testusers]; // hier können dann mittels axios daten von felix in users gespeichert und an db übergeben werden
+      this.newUsers = [...this.testusers]; // hier können dann mittels axios daten von felix in users gespeichert und an db übergeben werden
 
       this.testusers = [];
     },
@@ -34,7 +35,7 @@ export default {
     async insertData() {
       // API-Aufruf zum Einfügen von Daten
       try {
-        await axios.post('http://localhost:3000/api/insert', this.users);
+        await axios.post('http://localhost:3000/api/insert', this.newUsers);
 
         console.log('Daten erfolgreich eingefügt');
       } catch (error) {
@@ -43,6 +44,18 @@ export default {
 
       // Leere das Benutzerarray
       this.users = [];
+    },
+
+    async updateUserLngLat() {
+      // API-Aufruf zum Einfügen von Daten
+      try {
+        await axios.post('http://localhost:3000/api/update/:userId', this.uncodierteUser);
+
+        console.log('Daten erfolgreich eingefügt');
+      } catch (error) {
+        console.error('Fehler beim Einfügen von Daten:', error);
+      }
+
     },
 
 
@@ -75,19 +88,26 @@ export default {
         console.error('Fehler beim Auslesen der Daten:', error);
       }
     },
+
+    async initMap(){
+      await mapMethods.initMap();
+    },
   },
 
   mounted() {
+    /*Testen der einzelnen Methoden:
+      // Füge Testbenutzer hinzu
+      //this.addUser();
 
-    // Füge Testbenutzer hinzu
-    //this.addUser();
+      // Füge Daten in Db ein
+      // this.insertData();
 
-    // Füge Daten in Db ein
-    // this.insertData();
+      //this.getData()
 
-    //this.getData()
+      //this.getDataWithoutGeocoding()
+    */
 
-    this.getDataWithoutGeocoding()
+
   },
 };
 </script>
