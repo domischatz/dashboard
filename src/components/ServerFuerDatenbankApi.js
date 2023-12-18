@@ -203,9 +203,9 @@ app.get('/api/get', (req, res) => {
 });
 
 
-app.put('/api/update/:userId', (req, res) => {
-    const userId = req.params.userId;
-    const { Lng, Lat } = req.body;
+app.put('/api/update/:hostDaten', (req, res) => {
+    const hostDaten = req.params.hostDaten;
+    const { HostID, Lng, Lat } = req.body;
 
     if (!Lng || !Lat) {
         return res.status(400).send('Lng und Lat müssen angegeben werden.');
@@ -218,8 +218,8 @@ app.put('/api/update/:userId', (req, res) => {
         }
 
         connection.query(
-            'UPDATE users SET Lng = ?, Lat = ? WHERE UserID = ?',
-            [Lng, Lat, userId],
+            'UPDATE users SET Lng = ?, Lat = ? WHERE HostID = ?',
+            [Lng, Lat, HostID],
             (error, results) => {
                 // Freigeben der Verbindung
                 connection.release();

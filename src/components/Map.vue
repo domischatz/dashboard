@@ -5,9 +5,9 @@
 </template>
 
 <script>
-import userDaten from './testusers.json';
 import axios from 'axios';
 import {mapMethods} from './ausgelagerte Methoden/mapMethods';
+import {databaseMethods} from './ausgelagerte Methoden/databaseMethods';
 
 
 export default {
@@ -18,95 +18,119 @@ export default {
       testusers: [],
       newUsers: [],
       uncodierteUser: [],
+      geocodedAddresses:[],
     };
   },
 
   methods: {
-    addUser() {
-      // Lade Testdaten
-      this.testusers = userDaten;
 
-      // Füge den aktuellen Benutzer dem Benutzerarray hinzu
-      this.newUsers = [...this.testusers]; // hier können dann mittels axios daten von felix in users gespeichert und an db übergeben werden
+    async initMap() {
+      this.map = new window.google.maps.Map(this.$refs.map, {
+        center: { lat: 47.0808, lng: 10.3256 }, // Setze die Startposition der Karte aufs Paznauntal
+        zoom: 10,
+        styles: [
+          {
+            featureType: 'all',
+            elementType: 'labels',
+            stylers: [
+              { visibility: 'off' } // Setze die Sichtbarkeit aller Beschriftungen auf "aus"
+            ]
+          },
+          {
+            featureType: 'road',
+            elementType: 'labels',
+            stylers: [
+              { visibility: 'on' } // Setze die Sichtbarkeit von Straßenbeschriftungen auf "an"
+            ]
+          },
+          {
+            featureType: 'administrative.locality',
+            elementType: 'labels',
+            stylers: [
+              { visibility: 'on' } // Setze die Sichtbarkeit von Gemeinden auf "an"
+            ]
+          },
+        ]
+      });
 
-      this.testusers = [];
+      // Initialisiere den Geocoder
+      this.geocoder = new window.google.maps.Geocoder();
     },
 
+    async geocodeAddresses(format, data) {
 
-    async insertData() {
-      // API-Aufruf zum Einfügen von Daten
-      try {
-        await axios.post('http://localhost:3000/api/insert', this.newUsers);
+      await databaseMethods.getDataWithoutGeocoding();
 
-        console.log('Daten erfolgreich eingefügt');
-      } catch (error) {
-        console.error('Fehler beim Einfügen von Daten:', error);
+      // Geht durch jede Adresse im Array und wandelt diese in Längen- & Breitengrade um
+      Map.uncodierteUser.forEach((location) => {
+        const { Address, Hostname, HostID } = location;
+
+        this.geocoder.geocode({ address: Address }, (results, status) => {
+          if (status === "OK") {
+            const geocodedLocation = results[0].geometry.location;
+
+            // Extrahiere die Koordinaten, da sonst nur Eigenschaften von geocodierten Daten gespeichert werden
+            const lat = geocodedLocation.lat();
+            const lng = geocodedLocation.lng();
+
+            // Fügt geocodierte Position zum Array hinzu
+            this.geocodedAddresses.push({
+              HostID,
+              Hostname,
+              Lng: lng,
+              Lat: lat,
+            });
+
+            // Setzt Wegpunkt auf Karte
+            const marker = new window.google.maps.Marker({
+              map: this.map,
+              position: results[0].geometry.location,
+              title: Hostname,
+            });
+
+            // Erstellt Infofenster
+            const infoWindow = new window.google.maps.InfoWindow({
+              content: Hostname,
+            });
+
+            // Fügt Event-Listener hinzu, um Infofenster zu öffnen, wenn Marker geklickt
+            marker.addListener("click", () => {
+              infoWindow.open(this.map, marker);
+            });
+          } else {
+            console.error("Geocoding fehlgeschlagen für Adresse '" + Address + "': " + status);
+          }
+        });
+      });
+
+      console.log("geocodedAddresses: ", this.geocodedAddresses);
+      //Hier stehen geblieben !!!!!!!!!!!!!
+      for (let hostNumber = 0; hostNumber === this.geocodedAddresses.length; hostNumber++){
+        console.log(hostNumber);
+        await databaseMethods.updateUserLngLat(this.geocodedAddresses[hostNumber]);
       }
 
-      // Leere das Benutzerarray
-      this.newUsers = [];
+
+      // leeren des Arrays uncodierte User
+      this.uncodierteUser = [];
     },
-
-    async updateUserLngLat() {
-      // API-Aufruf zum Einfügen von Daten
-      try {
-        await axios.post('http://localhost:3000/api/update/:userId', this.uncodierteUser);
-
-        console.log('Daten erfolgreich eingefügt');
-      } catch (error) {
-        console.error('Fehler beim Einfügen von Daten:', error);
-      }
-
-    },
-
-
-    async getData() {
-      //API-Aufruf zum Auslesen der Daten
-      try {
-        const antwort = await axios.get('http://localhost:3000/api/get');
-
-        this.users = antwort.data;
-        console.log("Daten erfolgreich ausgelesen: ", this.users);
-        //console.log("API-Response: ", antwort)
-
-        this.users = [];
-      } catch (error) {
-        console.error('Fehler beim Auslesen der Daten:', error);
-      }
-    },
-
-    async getDataWithoutGeocoding() {
-      //API-Aufruf zum Auslesen der Daten
-      try {
-        const antwort = await axios.get('http://localhost:3000/api/get');
-
-        // this.uncodierteUser = antwort.data;
-        this.uncodierteUser = antwort.data.filter(user => user.Lng === 0 || user.Lat === 0);
-
-        console.log("Daten erfolgreich ausgelesen: ", this.uncodierteUser);
-
-      } catch (error) {
-        console.error('Fehler beim Auslesen der Daten:', error);
-      }
-    },
-
   },
 
   async mounted() {
     /*Testen der einzelnen Methoden:
       // Füge Testbenutzer hinzu
-      //this.addUser();
+      //await databaseMethods.addUser();
 
       // Füge Daten in Db ein
-      // this.insertData();
+      // await databaseMethods.insertData();
 
-      //this.getData()
+      //await databaseMethods.getData()
 
-      //this.getDataWithoutGeocoding()
+      //await databaseMethods.getDataWithoutGeocoding()
     */
 
-    await mapMethods.initMap()
-
+    await this.initMap()
+    await this.geocodeAddresses()
   },
 };
 </script>
