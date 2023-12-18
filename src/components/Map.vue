@@ -9,6 +9,7 @@ import userDaten from './testusers.json';
 import axios from 'axios';
 import {mapMethods} from './ausgelagerte Methoden/mapMethods';
 
+
 export default {
   data() {
     return {
@@ -43,7 +44,7 @@ export default {
       }
 
       // Leere das Benutzerarray
-      this.users = [];
+      this.newUsers = [];
     },
 
     async updateUserLngLat() {
@@ -89,12 +90,9 @@ export default {
       }
     },
 
-    async initMap(){
-      await mapMethods.initMap();
-    },
   },
 
-  mounted() {
+  async mounted() {
     /*Testen der einzelnen Methoden:
       // Füge Testbenutzer hinzu
       //this.addUser();
@@ -107,6 +105,7 @@ export default {
       //this.getDataWithoutGeocoding()
     */
 
+    await mapMethods.initMap()
 
   },
 };
