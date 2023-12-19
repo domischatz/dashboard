@@ -35,7 +35,6 @@ export default {
             datasets: [
               {
                 label: "Values",
-/*                backgroundColor: '#f87979',*/
                 data: this.jsonData.map(entry => parseFloat(entry.value)),
                 backgroundColor: "#2b4c99",
                 fill: false,
@@ -49,7 +48,7 @@ export default {
         }
       },
   mounted() {
-    import("../data/10621.json").then(data => {
+    import("../data/History/10621.json").then(data => {
       this.jsonData = data.default;
 
     });

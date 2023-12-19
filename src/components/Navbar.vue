@@ -18,10 +18,11 @@
         </router-link>
       </li>
       <li>
-        <router-link to="/Chart1" title="Seite 1">
-          <i class="fa fa-cogs"></i>
+        <router-link to="/Login" title="Login">
+          <i class="fa fa-user-circle"></i>
         </router-link>
       </li>
+
     </ul>
   </nav>
   </body>
