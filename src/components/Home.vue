@@ -6,12 +6,6 @@
       <div class="map-container">
         <Map/>
       </div>
-      <router-link to="/chart1" class="chart-container">
-<!--        <Chart1 />-->
-      </router-link>
-      <router-link to="/chart1" class="chart-container">
-<!--        <Chart1 />-->
-      </router-link>
     </div>
     <ErrorList/>
   </div>
@@ -20,13 +14,11 @@
 </template>
 
 <script>
-import Chart1 from '../components/Chart1.vue';
 import ErrorList from "./ErrorList.vue";
 import Map from '../components/Map.vue';
 
 export default {
   components: {
-    Chart1,
     ErrorList,
     Map,
   },

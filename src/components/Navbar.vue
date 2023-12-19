@@ -3,9 +3,8 @@
   <body>
   <nav>
     <div class="navbar-logo">
-      <img src="src/assets/logo.svg">
+      <img src="../assets/Logo_Internet-Paznaun_trans.png" alt="Logo" width="100" height="60" >
     </div>
-
     <ul>
       <li>
         <router-link to="/" title="Startseite">
@@ -45,8 +44,6 @@ nav {
   display: flex;
   justify-content: space-between;
 }
-
-
 
 .navbar-logo {
   display: flex;

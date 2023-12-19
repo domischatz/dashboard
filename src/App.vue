@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <!-- Sidebar -->
-    <Navbar/>
+    <Navbar v-if="$route.name !== 'Login'" />
     <!-- Content -->
     <router-view />
   </div>
