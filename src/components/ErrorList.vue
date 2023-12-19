@@ -1,6 +1,7 @@
 <template>
   <div>
-    <table ref="dataTable" class="display">
+    <table id="errorList" class="display">
+<!--      <table id="example" class="hover" style="width:100%">-->
       <thead>
       <tr>
         <th>Hostname</th>
@@ -38,7 +39,7 @@ export default {
   data() {
     return {
       fehlerliste: [],
-      datenHost: [],
+      dataTable: null,
     };
   },
   methods: {
@@ -49,25 +50,45 @@ export default {
       // Use this.$router.push to navigate to another page with the selectedData
       this.$router.push({ name: "DatenHost", query: {datenHost: JSON.stringify(selectedData) } });
     },
+    initializeDataTable() {
+      if (this.dataTable) {
+        // Destroy the existing DataTable
+        this.dataTable.destroy();
+      }
+
+      // Initialize DataTable
+      this.dataTable = $(this.$el).find("table").DataTable({
+        // DataTable options here
+      });
+    },
+  },
+  watch: {
+    // Watch for changes in fehlerliste and reinitialize DataTable
+    fehlerliste: {
+      handler() {
+        this.$nextTick(() => {
+          this.initializeDataTable();
+        });
+      },
+      deep: true,
+    },
   },
   mounted() {
     // Load fehlerliste.json
-      import("../data/fehlerliste.json").then(data => {
+    import("../data/fehlerliste.json").then((data) => {
       this.fehlerliste = data.default;
-      const dataTable = $(this.$refs.dataTable).DataTable();
     });
-
     // Load datenhost.json
     import("../data/datenHost.json").then(data => {
       this.datenHost = data.default;
     });
-
   },
 };
 </script>
 
 <style>
-input, select {
+input,
+select {
   background-color: var(--light);
 }
 

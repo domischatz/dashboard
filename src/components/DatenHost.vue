@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import ChartHost from '../components/ChartHost.vue';
+import ChartHost from './ChartHost.vue';
 export default {
   components: {
     ChartHost

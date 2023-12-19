@@ -12,7 +12,7 @@
         </router-link>
       </li>
       <li>
-        <router-link to="/Chart1" title="Seite 1">
+        <router-link to="/Login" title="Seite 1">
           <i class="fa fa-file-text"></i>
         </router-link>
       </li>

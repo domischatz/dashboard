@@ -4,7 +4,7 @@
       <div class="signIn" v-if="signIn">
         <div class="top">
           <img class="logo" src="../assets/Logo_Internet-Paznaun_trans.png" />
-          <div class="title">Sign in</div>
+          <div class="title">Login</div>
         </div>
         <form>
           <div class="form">
@@ -21,9 +21,8 @@
           </div>
           <input
               type="submit"
-              value="Submit"
+              value="Login"
               class="action"
-              :class="{ 'action-disabled': !loginValid }"
           />
         </form>
       </div>
@@ -96,14 +95,14 @@ input[type="password"] {
   border-radius: 25px;
   width: 100%;
   border: none;
-  background: green;
+  background: #82d9e1;
   margin-top: 20px;
-  color: #fff;
+  color: black;
   font-size: 1.2rem;
 
   &:hover {
-    background-color: #82d9e1;
-    color: green;
+    background-color: #82d9e1;;
+    color: white;
   }
 }
 
