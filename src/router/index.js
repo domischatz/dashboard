@@ -25,6 +25,11 @@ const routes = [
 		component: () => import('../components/ErrorList.vue')
 	},
 	{
+		path: '/Login',
+		name: 'Login',
+		component: () => import('../components/Login.vue')
+	},
+	{
 		path: '/DatenHost',
 		name: 'DatenHost',
 		component: () => import('../components/DatenHost.vue'),
