@@ -18,7 +18,6 @@ export default {
       testusers: [],
       newUsers: [],
       uncodierteUser: [],
-      geocodedAddresses:[],
     };
   },
 
@@ -26,28 +25,28 @@ export default {
 
     async initMap() {
       this.map = new window.google.maps.Map(this.$refs.map, {
-        center: { lat: 47.0808, lng: 10.3256 }, // Setze die Startposition der Karte aufs Paznauntal
+        center: {lat: 47.0808, lng: 10.3256}, // Setze die Startposition der Karte aufs Paznauntal
         zoom: 10,
         styles: [
           {
             featureType: 'all',
             elementType: 'labels',
             stylers: [
-              { visibility: 'off' } // Setze die Sichtbarkeit aller Beschriftungen auf "aus"
+              {visibility: 'off'} // Setze die Sichtbarkeit aller Beschriftungen auf "aus"
             ]
           },
           {
             featureType: 'road',
             elementType: 'labels',
             stylers: [
-              { visibility: 'on' } // Setze die Sichtbarkeit von Straßenbeschriftungen auf "an"
+              {visibility: 'on'} // Setze die Sichtbarkeit von Straßenbeschriftungen auf "an"
             ]
           },
           {
             featureType: 'administrative.locality',
             elementType: 'labels',
             stylers: [
-              { visibility: 'on' } // Setze die Sichtbarkeit von Gemeinden auf "an"
+              {visibility: 'on'} // Setze die Sichtbarkeit von Gemeinden auf "an"
             ]
           },
         ]
@@ -57,9 +56,11 @@ export default {
       this.geocoder = new window.google.maps.Geocoder();
     },
 
+
     async geocodeAddressesIfNotDone(format, data) {
 
       await databaseMethods.getDataWithoutGeocoding();
+      const geocodedAddresses = [];
 
       // Geht durch jede Adresse im Array und wandelt diese in Längen- & Breitengrade um
       Map.uncodierteUser.forEach((location) => {
@@ -74,7 +75,8 @@ export default {
             const lng = geocodedLocation.lng();
 
             // Fügt geocodierte Position zum Array hinzu
-            this.geocodedAddresses.push({
+
+            geocodedAddresses.push({
               HostID,
               Hostname,
               Lng: lng,
@@ -103,20 +105,25 @@ export default {
         });
       });
 
-      console.log("geocodedAddresses: ", this.geocodedAddresses);
+      console.log("geocodedAddresses: ", geocodedAddresses);
 
-      /*for (let hostNumber = 0; hostNumber === this.geocodedAddresses.length; hostNumber++){
-        console.log(hostNumber);
-        await databaseMethods.updateUserLngLat(this.geocodedAddresses[hostNumber]);
-      }*/
+      if (geocodedAddresses && geocodedAddresses instanceof Array && geocodedAddresses.length > 0) {
 
+          // Rufe updateUserLngLat mit den geocodierten Benutzerdaten auf
+          await databaseMethods.updateUserLngLat(geocodedAddresses);
+        }
+
+      await databaseMethods.updateUserLngLat(geocodedAddresses);
 
       // leeren des Arrays uncodierte User
       this.uncodierteUser = [];
     },
+
   },
 
-  async mounted() {
+
+
+    async mounted() {
     /*Testen der einzelnen Methoden:
       // Füge Testbenutzer hinzu
       //await databaseMethods.addUser();

@@ -1,5 +1,5 @@
 [
-  {"HostID": "10593", "Hostname": "Host Kappl", "Error": 1, "Priority": "4", "Address": "Grubegg 627, Kappl, AT", "Lng": 0, "Lat":  0},
-  {"HostID": "10724", "Hostname": "Pfarramt Galtuer - Bernhard Speringer", "Error": 1, "Priority": "4", "Address": "Valzurweg 3, Mathon, AT", "Lng": 0, "Lat":  0},
-  {"HostID": "10736", "Hostname": "Schischule Galtuer - Platz", "Error": 1, "Priority": "4", "Address": "Grubegg 342, Kappl, AT", "Lng": 0, "Lat":  0}
+  {"HostID": "10593", "Hostname": "Host Kappl", "Error": null, "Priority": "4", "Address": "Grubegg 627, Kappl, AT", "Lng": 0, "Lat":  0},
+  {"HostID": "10724", "Hostname": "Pfarramt Galtuer - Bernhard Speringer", "Error": null, "Priority": "4", "Address": "Valzurweg 3, Mathon, AT", "Lng": 0, "Lat":  0},
+  {"HostID": "10736", "Hostname": "Schischule Galtuer - Platz", "Error": null, "Priority": "4", "Address": "Grubegg 342, Kappl, AT", "Lng": 0, "Lat":  0}
 ]
