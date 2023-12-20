@@ -57,7 +57,7 @@ export default {
       this.geocoder = new window.google.maps.Geocoder();
     },
 
-    async geocodeAddresses(format, data) {
+    async geocodeAddressesIfNotDone(format, data) {
 
       await databaseMethods.getDataWithoutGeocoding();
 
@@ -104,11 +104,11 @@ export default {
       });
 
       console.log("geocodedAddresses: ", this.geocodedAddresses);
-      //Hier stehen geblieben !!!!!!!!!!!!!
-      for (let hostNumber = 0; hostNumber === this.geocodedAddresses.length; hostNumber++){
+
+      /*for (let hostNumber = 0; hostNumber === this.geocodedAddresses.length; hostNumber++){
         console.log(hostNumber);
         await databaseMethods.updateUserLngLat(this.geocodedAddresses[hostNumber]);
-      }
+      }*/
 
 
       // leeren des Arrays uncodierte User
@@ -130,7 +130,7 @@ export default {
     */
 
     await this.initMap()
-    await this.geocodeAddresses()
+    await this.geocodeAddressesIfNotDone()
   },
 };
 </script>

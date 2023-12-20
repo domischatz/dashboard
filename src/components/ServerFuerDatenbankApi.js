@@ -129,6 +129,8 @@ app.listen(port, () => {
 // Fehler beim Einfügen von Daten: Error:
 //   ER_NOT_SUPPORTED_AUTH_MODE: Client does not support authentication protocol requested by server; consider upgrading MySQL client
 
+
+
 // Durch googlen wurde herausgefunden dass mysql cors nicht richtig unterstützt (teilweise), es kann umgangen werden durch das verwenden von mysql2
 const express = require('express');
 const cors = require('cors');
