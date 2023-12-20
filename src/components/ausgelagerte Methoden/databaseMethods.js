@@ -29,10 +29,10 @@ export const databaseMethods = {
     },
 
 
-    async updateUserLngLat(HostDaten) {
+    async updateUserLngLat(geocodedAddresses) {
         // API-Aufruf zum Einfügen von Daten
         try {
-            await axios.post(`http://localhost:3000/api/update/${HostDaten}`);
+            await axios.post(`http://localhost:3000/api/update/${geocodedAddresses}`);
 
             console.log('Daten erfolgreich eingefügt');
         } catch (error) {
