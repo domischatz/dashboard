@@ -35,7 +35,7 @@ export default {
         labels: this.jsonData.map(entry => entry.clock),
         datasets: [
           {
-            label: "Values",
+            label: "Ping",
             data: this.jsonData.map(entry => parseFloat(entry.value)),
             backgroundColor: "#2b4c99",
             fill: false,
@@ -45,7 +45,7 @@ export default {
             borderWidth: 2,
           },
           {
-            label: "Values from 10621_chart2.json",
+            label: "Connection",
             data: this.jsonData2.map(entry => parseFloat(entry.value)),
             backgroundColor: "rgb(255, 50, 50)", // Set the desired color for the second dataset
             fill: false,
