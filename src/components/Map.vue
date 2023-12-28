@@ -6,7 +6,6 @@
 
 <script>
 import axios from 'axios';
-import {mapMethods} from './ausgelagerte Methoden/mapMethods';
 import {databaseMethods} from './ausgelagerte Methoden/databaseMethods';
 
 
@@ -56,14 +55,50 @@ export default {
       this.geocoder = new window.google.maps.Geocoder();
     },
 
+    async getDataWithoutGeocoding() {
+      //API-Aufruf zum Auslesen der Daten
+      try {
+        const antwort = await axios.get('http://localhost:3000/api/get');
+
+        // this.uncodierteUser = antwort.data;
+        const filteredUsers = JSON.stringify(antwort.data.filter(user => user.Lng === 0 || user.Lat === 0));
+
+        const dataArray = JSON.parse(filteredUsers);
+
+        const HostIds = [];
+
+        const Hostnames = [];
+
+        const Addresses = [];
+
+        for (var i = 0; i < dataArray.length; i++) {
+          HostIds.push(dataArray[i].HostID);
+          Hostnames.push(dataArray[i].Hostname);
+          Addresses.push(dataArray[i].Address);
+        }
+
+        const users = [];
+
+        for (var i = 0; i < Math.min(HostIds.length, Hostnames.length, Addresses.length); i++) {
+          users.push([HostIds[i], Hostnames[i], Addresses[i]]);
+        }
+
+        console.log("users: ", users);
+
+        console.log("Daten erfolgreich ausgelesen: ", this.uncodierteUser);
+
+      } catch (error) {
+        console.error('Fehler beim Auslesen der Daten:', error);
+      }
+    },
 
     async geocodeAddressesIfNotDone(format, data) {
 
-      await databaseMethods.getDataWithoutGeocoding();
+      await this.getDataWithoutGeocoding();
       const geocodedAddresses = [];
 
       // Geht durch jede Adresse im Array und wandelt diese in Längen- & Breitengrade um
-      Map.uncodierteUser.forEach((location) => {
+      this.uncodierteUser.forEach((location) => {
         const { Address, Hostname, HostID } = location;
 
         this.geocoder.geocode({ address: Address }, (results, status) => {
@@ -107,13 +142,15 @@ export default {
 
       console.log("geocodedAddresses: ", geocodedAddresses);
 
+      console.log("geocodedAddresses.length: ", geocodedAddresses.length);
+
       if (geocodedAddresses && geocodedAddresses instanceof Array && geocodedAddresses.length > 0) {
 
           // Rufe updateUserLngLat mit den geocodierten Benutzerdaten auf
           await databaseMethods.updateUserLngLat(geocodedAddresses);
         }
 
-      await databaseMethods.updateUserLngLat(geocodedAddresses);
+      //await databaseMethods.updateUserLngLat(geocodedAddresses);
 
       // leeren des Arrays uncodierte User
       this.uncodierteUser = [];

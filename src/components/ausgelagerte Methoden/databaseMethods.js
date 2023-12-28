@@ -30,7 +30,7 @@ export const databaseMethods = {
 
     async updateUserLngLat(geocodedAddresses) {
         // Überprüfe, ob Daten vorhanden
-        console.log("Parameter geocodedAddresses: ", geocodedAddresses);
+        console.log("Parameter geocodedAddresses: ", JSON.stringify(geocodedAddresses));
 
         if (!geocodedAddresses || !Array.isArray(geocodedAddresses) || geocodedAddresses.length === 0) {
             console.log("updateUserLngLat: Keine Daten zum Aktualisieren vorhanden.");
@@ -62,22 +62,6 @@ export const databaseMethods = {
             //console.log("API-Response: ", antwort)
 
             this.users = [];
-        } catch (error) {
-            console.error('Fehler beim Auslesen der Daten:', error);
-        }
-    },
-
-
-    async getDataWithoutGeocoding() {
-        //API-Aufruf zum Auslesen der Daten
-        try {
-            const antwort = await axios.get('http://localhost:3000/api/get');
-
-            // this.uncodierteUser = antwort.data;
-            Map.uncodierteUser = antwort.data.filter(user => user.Lng === 0 || user.Lat === 0);
-
-            console.log("Daten erfolgreich ausgelesen: ", Map.uncodierteUser);
-
         } catch (error) {
             console.error('Fehler beim Auslesen der Daten:', error);
         }
