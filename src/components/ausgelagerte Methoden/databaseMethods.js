@@ -28,28 +28,8 @@ export const databaseMethods = {
         this.newUsers = [];
     },
 
-    async updateUserLngLat(geocodedAddresses) {
-        // Überprüfe, ob Daten vorhanden
-        console.log("Parameter geocodedAddresses: ", JSON.stringify(geocodedAddresses));
 
-        if (!geocodedAddresses || !Array.isArray(geocodedAddresses) || geocodedAddresses.length === 0) {
-            console.log("updateUserLngLat: Keine Daten zum Aktualisieren vorhanden.");
-            return;
-        }
 
-        try {
-            // API-Aufruf zum Aktualisieren von Benutzerdaten
-            await Promise.all(geocodedAddresses.map(async (address) => {
-                const { HostID, Lng, Lat } = address;
-                await axios.put(`http://localhost:3000/api/update/${HostID}`, { Lng, Lat });
-                console.log(`updateUserLngLat: Daten erfolgreich aktualisiert für HostID: ${HostID}`);
-            }));
-
-            console.log('updateUserLngLat: Alle Daten erfolgreich aktualisiert');
-        } catch (error) {
-            console.error('updateUserLngLat: Fehler beim Aktualisieren der Daten:', error);
-        }
-    },
 
 
     async getData() {
@@ -65,6 +45,18 @@ export const databaseMethods = {
         } catch (error) {
             console.error('Fehler beim Auslesen der Daten:', error);
         }
+    },
+
+    async getDataWithoutGeocoding() {
+        //API-Aufruf zum Auslesen der Daten
+        try {
+            const antwort = await axios.get('http://localhost:3000/api/get');
+            console.log("Daten erfolgreich ausgelesen: ", JSON.stringify(antwort.data));
+            return  antwort.data.filter(user => user.Lng === 0 || user.Lat === 0);;
+        } catch (error) {
+            console.error('Fehler beim Auslesen der Daten:', error);
+        }
+
     },
 
 }

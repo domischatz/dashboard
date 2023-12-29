@@ -72,8 +72,10 @@ app.get('/api/get', (req, res) => {
 
 
 app.put('/api/update/:HostID', (req, res) => {
+    console.log(req.params)
     const HostID = req.params.HostID;
     const { Lng, Lat } = req.body;
+
     if (!Lng || !Lat) {
         return res.status(400).send('Lng und Lat müssen angegeben werden.');
     }

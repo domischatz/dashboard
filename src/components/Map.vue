@@ -16,6 +16,7 @@ export default {
       geocoder: null,
       testusers: [],
       newUsers: [],
+      geocodedAddresses: [],
       uncodierteUser: [],
     };
   },
@@ -55,47 +56,13 @@ export default {
       this.geocoder = new window.google.maps.Geocoder();
     },
 
-    async getDataWithoutGeocoding() {
-      //API-Aufruf zum Auslesen der Daten
-      try {
-        const antwort = await axios.get('http://localhost:3000/api/get');
 
-        // this.uncodierteUser = antwort.data;
-        const filteredUsers = JSON.stringify(antwort.data.filter(user => user.Lng === 0 || user.Lat === 0));
+    async geocodeAddressesIfNotDone() {
 
-        const dataArray = JSON.parse(filteredUsers);
+      this.uncodierteUser = await  databaseMethods.getDataWithoutGeocoding();
+      console.log("UCUSER" + JSON.stringify(this.uncodierteUser));
 
-        const HostIds = [];
-
-        const Hostnames = [];
-
-        const Addresses = [];
-
-        for (var i = 0; i < dataArray.length; i++) {
-          HostIds.push(dataArray[i].HostID);
-          Hostnames.push(dataArray[i].Hostname);
-          Addresses.push(dataArray[i].Address);
-        }
-
-        const users = [];
-
-        for (var i = 0; i < Math.min(HostIds.length, Hostnames.length, Addresses.length); i++) {
-          users.push([HostIds[i], Hostnames[i], Addresses[i]]);
-        }
-
-        console.log("users: ", users);
-
-        console.log("Daten erfolgreich ausgelesen: ", this.uncodierteUser);
-
-      } catch (error) {
-        console.error('Fehler beim Auslesen der Daten:', error);
-      }
-    },
-
-    async geocodeAddressesIfNotDone(format, data) {
-
-      await this.getDataWithoutGeocoding();
-      const geocodedAddresses = [];
+      //const geocodedAddresses = [];
 
       // Geht durch jede Adresse im Array und wandelt diese in Längen- & Breitengrade um
       this.uncodierteUser.forEach((location) => {
@@ -111,7 +78,7 @@ export default {
 
             // Fügt geocodierte Position zum Array hinzu
 
-            geocodedAddresses.push({
+            this.geocodedAddresses.push({
               HostID,
               Hostname,
               Lng: lng,
@@ -140,25 +107,52 @@ export default {
         });
       });
 
-      console.log("geocodedAddresses: ", geocodedAddresses);
+      console.log("geocodedAddresses: ", this.geocodedAddresses);
 
-      console.log("geocodedAddresses.length: ", geocodedAddresses.length);
-
-      if (geocodedAddresses && geocodedAddresses instanceof Array && geocodedAddresses.length > 0) {
-
-          // Rufe updateUserLngLat mit den geocodierten Benutzerdaten auf
-          await databaseMethods.updateUserLngLat(geocodedAddresses);
-        }
-
-      //await databaseMethods.updateUserLngLat(geocodedAddresses);
+      if (this.geocodedAddresses && this.geocodedAddresses instanceof Array /*&& this.geocodedAddresses.length > 0*/) {
+        // Rufe updateUserLngLat mit den geocodierten Benutzerdaten auf
+        await this.updateUserLngLat();
+      }
 
       // leeren des Arrays uncodierte User
       this.uncodierteUser = [];
     },
 
+
+    async updateUserLngLat() {
+      // Überprüfe, ob Daten vorhanden
+      console.log("Parameter geocodedAddresses: ", this.geocodedAddresses);
+
+      if (!this.geocodedAddresses || !Array.isArray(this.geocodedAddresses) /*|| this.geocodedAddresses.length === 0*/) {
+        console.log("updateUserLngLat: Keine Daten zum Aktualisieren vorhanden.");
+        return;
+      }
+
+      try {
+        console.log("Parameter geocodedAddresses in try: ", this.geocodedAddresses);
+        // API-Aufruf zum Aktualisieren von Benutzerdaten
+
+        const ersteHostID = this.geocodedAddresses[0].HostID;
+
+        console.log(ersteHostID);
+
+        const requestData = this.geocodedAddresses.map(({ HostID, Lng, Lat }) => ({
+          HostID,
+          Lng,
+          Lat,
+        }));
+
+        console.log("daten: ", requestData)
+
+          await axios.put(`http://localhost:3000/api/update/${HostID}`, { Lng, Lat });
+          console.log(`updateUserLngLat: Daten erfolgreich aktualisiert für HostID: ${HostID}`);
+
+        console.log('updateUserLngLat: Alle Daten erfolgreich aktualisiert');
+      } catch (error) {
+        console.error('updateUserLngLat: Fehler beim Aktualisieren der Daten:', error);
+      }
+    },
   },
-
-
 
     async mounted() {
     /*Testen der einzelnen Methoden:
